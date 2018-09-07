@@ -10,7 +10,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-//@WebServlet(name = "HelloServlet")
 @WebServlet("/hello")
 public class HelloServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,7 +20,12 @@ public class HelloServlet extends HttpServlet {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateStr = dateFormat.format(new Date());
         request.setAttribute("currectTime", dateStr);
-        request.setAttribute("currectTime", dateStr);
+
+
+
+
+
+
         request.getRequestDispatcher("/jsp/hello.jsp").forward(request, response);
 
     }
