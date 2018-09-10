@@ -1,6 +1,6 @@
 package test;
 
-import com.cpfframe4j.service.CustomerService;
+import com.cpf.custom.CustomerService;
 import org.junit.Before;
 import org.junit.Test;
 

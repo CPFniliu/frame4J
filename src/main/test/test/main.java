@@ -1,6 +1,6 @@
 package test;
 
-import com.cpfframe4j.model.Customer;
+import com.cpf.custom.Customer;
 
 public class main {
     public static void main(String[] args) {
