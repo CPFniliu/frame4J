@@ -1,13 +1,14 @@
 package com.cpf.frame4j.controller;
 
-import com.cpf.frame4j.util.common.ClassUtil;
+        import com.cpf.frame4j.util.common.ClassUtil;
 
 public class FrameIniter {
 
     public static void init() {
         Class<?>[] classes = {ClassHolder.class,
                 BeanHolder.class,
-                ControllerHolder.class
+                AopHolder.class,
+                ControllerHolder.class,
         };
 
         for (Class<?> cls : classes) {

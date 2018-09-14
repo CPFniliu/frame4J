@@ -59,8 +59,10 @@ public class BeanHolder {
             throw new RuntimeException("not found " + cls.getName() + "in BEAN_MAP");
         }
         return (T) BEAN_MAP.get(cls);
-
     }
 
+    public static void addBean(Class<?> cls, Object obj) {
+        BEAN_MAP.put(cls, obj);
+    }
 
 }

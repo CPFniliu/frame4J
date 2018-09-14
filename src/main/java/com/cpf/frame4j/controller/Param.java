@@ -22,11 +22,11 @@ public class Param {
         this.request = req;
         initParam();
 
-        System.out.println(123254365);
-        System.out.println(request.getPathInfo());
-        System.out.println(request.getContextPath());
-        System.out.println(request.getRequestURL());
-        System.out.println(request.getPathTranslated());
+//        System.out.println(123254365);
+//        System.out.println(request.getPathInfo());
+//        System.out.println(request.getContextPath());
+//        System.out.println(request.getRequestURL());
+//        System.out.println(request.getPathTranslated());
     }
 
     public void initParam() throws IOException {// 创建请求对象

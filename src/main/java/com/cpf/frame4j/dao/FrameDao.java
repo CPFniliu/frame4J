@@ -1,6 +1,5 @@
 package com.cpf.frame4j.dao;
 
-import com.cpf.custom.Customer;
 import com.cpf.frame4j.util.db.EntityUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -91,7 +90,7 @@ public class FrameDao implements IDao{
     }
 
     @Override
-    public <T extends IDbEntity> T find(String sql, Class<T> retrunClass, Object[] params) {
+    public <T extends IDbEntity> T find(String sql, Class<T> retrunClass, Object... params) {
         if (BaseEntity.class.isAssignableFrom(retrunClass)) {
             Map<String, Object> queryMap = exeQueryRunnerQuery(conn, sql, new MapHandler(), params);
             try {
@@ -108,7 +107,7 @@ public class FrameDao implements IDao{
     }
 
     @Override
-    public <T extends IDbEntity> List<T> findList(String sql, Class<T> retrunClass, Object[] params) {
+    public <T extends IDbEntity> List<T> findList(String sql, Class<T> retrunClass, Object... params) {
         List<T> entityList = null;
         if (BaseEntity.class.isAssignableFrom(retrunClass)) {
             List<Map<String, Object>> mapList = exeQueryRunnerQuery(conn, sql, new MapListHandler(), params);
@@ -208,22 +207,4 @@ public class FrameDao implements IDao{
         }
     }
 
-    public static void main(String[] args) {
-
-
-        Customer customer = new Customer();
-        customer.setContact("朝礼斌");
-        customer.setEmail("100@epoint.com");
-        customer.setName("江苏国泰新店软件有限公司");
-        customer.setPhone("5223-3278287832");
-        customer.setRemark("公司老总");
-        FrameDao instance = FrameDao.getInstance();
-        boolean insert = instance.insert(customer);
-        System.out.println(insert);
-
-//        List<Customer> list = instance.findlist(Customer.class, sql, null);
-//        System.out.println(list);
-
-
-    }
 }

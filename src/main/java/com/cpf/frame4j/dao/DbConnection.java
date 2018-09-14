@@ -1,5 +1,6 @@
 package com.cpf.frame4j.dao;
 
+import com.cpf.frame4j.util.validate.LoggerUtil;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class DbConnection {
      *
      * @return
      */
-    public static Connection getConnection() {
+    public static final Connection getConnection() {
         Connection conn = CONN_HOLDER.get();
         if (conn == null) {
             try {
@@ -53,22 +54,62 @@ public class DbConnection {
         return conn;
     }
 
+    public static final void beginTransaction() {
+        Connection conn = CONN_HOLDER.get();
+        if (conn == null) {
+            conn = getConnection();
+        }
+        try {
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            LoggerUtil.loggerAndThrow(LOGGER, "transaction begin failure", e);
+        }
+    }
+
+    public static final void commitTransaction() {
+        Connection conn = CONN_HOLDER.get();
+        try {
+            if (conn != null) {
+                conn.commit();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            LoggerUtil.loggerAndThrow(LOGGER, "transaction commit failure", e);
+        } finally {
+            CONN_HOLDER.remove();
+        }
+    }
+
+    public static final void rollBackTransaction() {
+        Connection conn = CONN_HOLDER.get();
+        try {
+            if (conn != null) {
+                conn.rollback();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            LoggerUtil.loggerAndThrow(LOGGER, "transaction rollback failure", e);
+        } finally {
+            CONN_HOLDER.remove();
+        }
+    }
+
     /**
      * dbcp2 数据源管理不需要关闭数据源
      * 关闭框架数据库连接
      */
-//    public static void closeConnection() {
-//        Connection conn = CONN_HOLDER.get();
-//        if (conn != null) {
-//            try {
-//                conn.close();
-//            } catch (SQLException e) {
-//                LOGGER.error("close connection error", e);
-//                throw new RuntimeException(e);
-//            } finally {
-//                CONN_HOLDER.remove();
-//            }
-//        }
-//    }
+    public static final void closeConnection() {
+        Connection conn = CONN_HOLDER.get();
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                LOGGER.error("close connection error", e);
+                throw new RuntimeException(e);
+            } finally {
+                CONN_HOLDER.remove();
+            }
+        }
+    }
 
 }
